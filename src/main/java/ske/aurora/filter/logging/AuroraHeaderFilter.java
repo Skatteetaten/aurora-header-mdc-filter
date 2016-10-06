@@ -19,9 +19,9 @@ import org.slf4j.MDC;
 
 public class AuroraHeaderFilter implements Filter {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AuroraHeaderFilter.class);
     private static final String KORRELASJONS_ID = "Korrelasjonsid";
     private static final List<String> HEADERS = Arrays.asList(KORRELASJONS_ID, "Meldingid", "Klientid");
-    private static final Logger LOG = LoggerFactory.getLogger(AuroraHeaderFilter.class);
 
     public void init(FilterConfig filterConfig) {
     }
@@ -47,6 +47,7 @@ public class AuroraHeaderFilter implements Filter {
 
         if (korrelasjonsId == null || korrelasjonsId.isEmpty()) {
             korrelasjonsId = UUID.randomUUID().toString();
+            LOG.debug("Kunne ikke finne {}. Generert=true {}={}", KORRELASJONS_ID, KORRELASJONS_ID, korrelasjonsId);
             MDC.put(KORRELASJONS_ID, korrelasjonsId);
         }
 
@@ -61,6 +62,7 @@ public class AuroraHeaderFilter implements Filter {
                 MDC.put(headerName, headerValue);
             }
         });
+        LOG.debug("Registrerte headerverdier i MDC");
     }
 
     public void destroy() {
