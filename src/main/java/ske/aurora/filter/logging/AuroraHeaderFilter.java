@@ -57,7 +57,7 @@ public class AuroraHeaderFilter implements Filter {
 
         headers.forEach(headerName -> {
             String headerValue = request.getHeader(headerName);
-            if (headerValue != null && headerValue.trim().isEmpty()) {
+            if (headerValue != null && !headerValue.trim().isEmpty()) {
                 MDC.put(headerName, headerValue);
             }
         });
