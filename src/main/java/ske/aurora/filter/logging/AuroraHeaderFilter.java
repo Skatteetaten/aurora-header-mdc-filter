@@ -20,7 +20,7 @@ import org.slf4j.MDC;
 public class AuroraHeaderFilter implements Filter {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuroraHeaderFilter.class);
-    private static final String KORRELASJONS_ID = "Korrelasjonsid";
+    public static final String KORRELASJONS_ID = "Korrelasjonsid";
     private static final List<String> HEADERS = Arrays.asList(KORRELASJONS_ID, "Meldingid", "Klientid");
 
     public void init(FilterConfig filterConfig) {
@@ -41,7 +41,7 @@ public class AuroraHeaderFilter implements Filter {
         }
     }
 
-    private void assertKorrelasjonsIdIsSet() {
+    protected static void assertKorrelasjonsIdIsSet() {
 
         String korrelasjonsId = MDC.get(KORRELASJONS_ID);
 
@@ -54,7 +54,7 @@ public class AuroraHeaderFilter implements Filter {
         RequestKorrelasjon.setId(korrelasjonsId);
     }
 
-    private void copyHeadersFromRequestToMdc(HttpServletRequest request, List<String> headers) {
+    protected static void copyHeadersFromRequestToMdc(HttpServletRequest request, List<String> headers) {
 
         headers.forEach(headerName -> {
             String headerValue = request.getHeader(headerName);
