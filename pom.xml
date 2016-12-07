@@ -5,7 +5,7 @@
 
   <groupId>ske.aurora</groupId>
   <artifactId>aurora-header-mdc-filter</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <packaging>jar</packaging>
 
   <name>aurora-header-mdc-filter</name>
