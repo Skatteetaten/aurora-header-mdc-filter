@@ -34,6 +34,10 @@
     </snapshotRepository>
   </distributionManagement>
 
+  <scm>
+    <connection>scm:git:https://aurora/git/scm/auf/aurora-header-mdc-filter.git</connection>
+  </scm>
+
   <build>
     <pluginManagement>
       <plugins>
