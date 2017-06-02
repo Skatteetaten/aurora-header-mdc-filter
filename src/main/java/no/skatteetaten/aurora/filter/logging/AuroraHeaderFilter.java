@@ -1,4 +1,4 @@
-package ske.aurora.filter.logging;
+package no.skatteetaten.aurora.filter.logging;
 
 import java.io.IOException;
 import java.util.Arrays;

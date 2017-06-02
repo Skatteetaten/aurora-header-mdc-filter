@@ -5,7 +5,7 @@
 
   <groupId>no.skatteetaten.aurora</groupId>
   <artifactId>aurora-header-mdc-filter</artifactId>
-  <version>1.1.9</version>
+  <version>1.2.0</version>
   <packaging>jar</packaging>
 
   <name>aurora-header-mdc-filter</name>

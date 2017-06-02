@@ -1,4 +1,4 @@
-package ske.aurora.filter.logging;
+package no.skatteetaten.aurora.filter.logging;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

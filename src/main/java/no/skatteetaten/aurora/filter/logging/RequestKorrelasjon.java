@@ -1,4 +1,4 @@
-package ske.aurora.filter.logging;
+package no.skatteetaten.aurora.filter.logging;
 
 public class RequestKorrelasjon {
     private static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<>();

@@ -4,7 +4,7 @@ Dette er et filter som automatisk registrerer Korrelasjonsid, Meldingid og Klien
 
 Det vil også gjøre Korrelasjonsid tilgjengelig i en ThreadLocal tilgjengelig på
 
-    String ske.aurora.filter.logging.RequestKorrelasjon.getId()
+    String RequestKorrelasjon.getId()
 
 
 ## Hvordan bruke fra Spring Boot
@@ -15,7 +15,7 @@ Filteret registreres enkelt i en spring boot applikasjon via springs `FilterRegi
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
     
-    import ske.aurora.filter.logging.AuroraHeaderFilter;
+    import AuroraHeaderFilter;
 
     @Configuration
     public class AuroraFilterRegistrationBean {
