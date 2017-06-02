@@ -3,48 +3,64 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ske.aurora</groupId>
+  <groupId>no.skatteetaten.aurora</groupId>
   <artifactId>aurora-header-mdc-filter</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.1.9</version>
   <packaging>jar</packaging>
 
   <name>aurora-header-mdc-filter</name>
-  <description></description>
+  <description>Servlet filter to read Aurora Headers</description>
+  <url>https://github.com/Skatteetaten/aurora-header-mdc-filter</url>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-    <!-- Prosjektspesifikk Nexus staging profil. Må endres av prosjektene -->
-    <staging-profile-id-med-clm>8815b545f21bd</staging-profile-id-med-clm>
-    <nexus-staging-maven-plugin.version>1.6.6</nexus-staging-maven-plugin.version>
   </properties>
 
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <distributionManagement>
-    <repository>
-      <id>releases</id>
-      <url>http://aurora/nexus/content/repositories/releases</url>
-    </repository>
     <snapshotRepository>
-      <id>snapshots</id>
-      <name>Internal Snapshots</name>
-      <url>http://aurora/nexus/content/repositories/snapshots</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 
+
   <scm>
-    <connection>scm:git:https://aurora/git/scm/auf/aurora-header-mdc-filter.git</connection>
+    <url>https://github.com/skatteetaten/aurora-header-mdc-filter</url>
+    <connection>scm:git:git://github.com/skatteetaten/aurora-header-mdc-filter.git</connection>
+    <developerConnection>scm:git:git@github.com:skatteetaten/aurora-header-mdc-filter.git</developerConnection>
   </scm>
+
+  <developers>
+    <developer>
+      <id>bjartek</id>
+      <name>Bjarte S. Karlsen</name>
+      <email>bjarte.karlsen@skatteetaten.no</email>
+    </developer>
+  </developers>
 
   <build>
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>ske.aurora.maven.plugins</groupId>
+          <groupId>org.sonatype.plugins</groupId>
+          <artifactId>nexus-staging-maven-plugin</artifactId>
+          <version>1.6.7</version>
+        </plugin>
+        <plugin>
+          <groupId>no.skatteetaten.aurora.maven.plugins</groupId>
           <artifactId>aurora-cd</artifactId>
-          <version>1.0.6</version>
+          <version>1.0.7</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -64,6 +80,16 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>maven-scm-plugin</artifactId>
         <configuration>
@@ -91,12 +117,12 @@
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>6.13</version>
+            <version>7.5</version>
           </dependency>
           <dependency>
-            <groupId>ske.aurora.checkstyle</groupId>
+            <groupId>no.skatteetaten.aurora.checkstyle</groupId>
             <artifactId>checkstyle-config</artifactId>
-            <version>0.5</version>
+            <version>0.8</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -126,23 +152,58 @@
 
   <profiles>
     <profile>
-      <id>release-staging</id>
+      <id>sign</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>build-extras</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>${nexus-staging-maven-plugin.version}</version>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>releases</serverId>
-              <nexusUrl>http://aurora/nexus/</nexusUrl>
-              <stagingProfileId>${staging-profile-id-med-clm}</stagingProfileId>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.3</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
