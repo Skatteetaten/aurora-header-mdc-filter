@@ -29,12 +29,8 @@ public class AuroraHeaderFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
         try {
-            try {
-                copyHeadersFromRequestToMdc((HttpServletRequest) request, HEADERS);
-                assertKorrelasjonsIdIsSet();
-            } catch (Throwable t) {
-                LOG.error("Kunne ikke håndtere Aurora headere", t);
-            }
+            copyHeadersFromRequestToMdc((HttpServletRequest) request, HEADERS);
+            assertKorrelasjonsIdIsSet();
 
             chain.doFilter(request, response);
         } finally {
