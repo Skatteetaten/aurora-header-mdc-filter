@@ -33,8 +33,6 @@ public class AuroraHeaderFilter implements Filter {
             assertKorrelasjonsIdIsSet();
 
             chain.doFilter(request, response);
-        } catch (Throwable t) {
-            LOG.error("Kunne ikke håndtere Aurora headere", t);
         } finally {
             MDC.remove(KORRELASJONS_ID);
             RequestKorrelasjon.cleanup();
