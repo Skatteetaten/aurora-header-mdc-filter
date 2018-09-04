@@ -58,6 +58,8 @@ public class AuroraHeaderFilter implements Filter {
             String headerValue = request.getHeader(headerName);
             if (headerValue != null && !headerValue.trim().isEmpty()) {
                 MDC.put(headerName, headerValue);
+            } else {
+                MDC.remove(headerName);
             }
         });
         LOG.debug("Registrerte headerverdier i MDC");
