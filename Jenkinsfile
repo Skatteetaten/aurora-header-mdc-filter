@@ -10,6 +10,7 @@ def overrides = [
     piTests: false,
     credentialsId: "github",
     deployTo: 'maven-central',
+    openshiftBuild: false,
     suggestVersionAndTagReleases: [
       [branch: 'master', versionHint: '2']
     ]
