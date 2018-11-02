@@ -21,7 +21,7 @@ public class AuroraHeaderFilter implements Filter {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuroraHeaderFilter.class);
     public static final String KORRELASJONS_ID = "Korrelasjonsid";
-    private static final List<String> HEADERS = Arrays.asList(KORRELASJONS_ID, "Meldingid", "Klientid");
+    private static final List<String> HEADERS = Arrays.asList(KORRELASJONS_ID, "Meldingsid", "Klientid");
 
     public void init(FilterConfig filterConfig) {
     }
