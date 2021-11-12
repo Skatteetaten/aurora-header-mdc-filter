@@ -9,6 +9,7 @@ def overrides = [
     checkstyle : false,
     sonarQube: false,
     iqOrganizationName: "Team AOS",
+    iqBreakOnUnstable: true,
     openShiftBuild: false,
     deployTo: 'maven-central',
     jiraFiksetIKomponentversjon: true,
